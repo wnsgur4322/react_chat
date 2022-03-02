@@ -47,16 +47,12 @@ export default function Chat(){
                         setUsers([...users]);
                         console.log("users:", users);
                 });
-        }, [window.location]);
+        }, []);
 
         useEffect(() => {
                 socket.on("message", (message) => {
                         scrollToBottom();
                         setMessages((messages) => [...messages, message]);
-                });
-                socket.on('roomData', ({room, users}) => {
-                        setUsers([...users]);
-                        console.log("users:", users);
                 });
         }, []);
 
@@ -70,6 +66,10 @@ export default function Chat(){
 
         const handleSignOut = (e) => {
                 e.preventDefault();
+                socket.on('roomData', ({room, users}) => {
+                        setUsers([...users]);
+                        console.log("users:", users);
+                });
                 socket.close();
                 history.push("/");     
         }

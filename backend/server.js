@@ -15,7 +15,7 @@ const io = require("socket.io")(server, {
 const PORT = process.env.PORT || 3080
 
 // import create user function and message
-const {createUser, getCurrentUser, removeUser, getRoomUsers} = require('./user');
+const {createUser, getCurrentUser, removeUser, getRoomUsers, deleteData} = require('./user');
 
 io.on("connection", (socket) => {
         // join chat room and messaging by createUser
@@ -53,11 +53,6 @@ io.on("connection", (socket) => {
 
         // user disconection
         socket.on("disconnect", () => {
-                const curUser = getCurrentUser(socket.id);
-                io.to(curUser.room).emit("roomData", {
-                        room: curUser.room,
-                        users: getRoomUsers(curUser.room)
-                });
                 const user = removeUser(socket.id);
                 console.log(user);
 
@@ -67,6 +62,7 @@ io.on("connection", (socket) => {
                 });
 
                 console.log(`${user.username} has disconnected!!`);
+                deleteData(socket.id);
         });
 });
 

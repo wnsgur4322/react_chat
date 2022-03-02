@@ -19,6 +19,12 @@ exports.removeUser = (id) => {
         return users[i];
 };
 
+exports.deleteData = (id) => {
+        const i = users.findIndex((user) => user.id === id);
+        users.splice(i, 1);
+        return;
+}
+
 exports.getRoomUsers = (room) => {
         return users.filter((user) => user.room === room);
 }
