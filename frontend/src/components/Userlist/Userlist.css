@@ -1,0 +1,10 @@
+/*
+Userlist.css
+Author: Derek Jeong
+Description: Userlist.css is a css styling file for implementing styles, fonts, and design.
+*/
+
+.userList {
+        height: 400px;
+        overflow-y: auto;
+}
