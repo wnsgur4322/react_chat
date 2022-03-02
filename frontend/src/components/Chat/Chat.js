@@ -1,7 +1,7 @@
 /*
 Chat.js
 Author: Derek Jeong
-Description: Chat.js is a react hook component for rendering chatting box with input box
+Description: Chat.js is a react hook component for rendering chatting room page with user input from Home page 
 */
 import React, { useState, useEffect, useRef } from "react";
 import queryString from "query-string";
@@ -9,6 +9,8 @@ import io from "socket.io-client";
 import { useHistory } from "react-router-dom";
 import { Paper, Button, Grid } from '@mui/material';
 
+import Message from "../Message/Message";
+import Userlist from "../Userlist/Userlist";
 import "./Chat.css";
 
 let socket;
@@ -21,41 +23,33 @@ export default function Chat(){
         const [messages, setMessages] = useState([]);
         const [massage, setMassage] = useState("");
         const endpoint = "http://localhost:3080";
-        const messagesEndRef = useRef(null);
 
-
-        // scroll down when new message added
-        const scrollToBottom = () => {
-                if (!!messagesEndRef.current.scrollHeight){
-                const scroll = messagesEndRef.current.scrollHeight - messagesEndRef.current.clientHeight;
-                messagesEndRef.current.scrollTo(0, scroll);        
-                }
-        }
-
+        // side effect when a user join the chat room
         useEffect(() => {
                 const { username , room } = queryString.parse(window.location.search);
                 socket = io(endpoint);
-                console.log(socket.clients);
                 setUsername(username);
                 setRoom(room);
 
                 socket.emit("join", {username, room}, (error) => {
-                        scrollToBottom();
+                        // scrollToBottom();
                         if (error) alert(error);
                 });
-                socket.on('roomData', ({room, users}) => {
-                        setUsers([...users]);
+        }, []);
+
+        // side effect when message send and update room data
+        useEffect(() => {
+                socket.on("message", (message) => {
+                        // scrollToBottom();
+                        setMessages((messages) => [...messages, message]);
+                });
+                socket.on('roomData', ({users}) => {
+                        setUsers(users);
                         console.log("users:", users);
                 });
         }, []);
 
-        useEffect(() => {
-                socket.on("message", (message) => {
-                        scrollToBottom();
-                        setMessages((messages) => [...messages, message]);
-                });
-        }, []);
-
+        // send message with form submit handler
         const handleSendMsg = (e) => {
                 e.preventDefault();
                 if (massage) {
@@ -64,12 +58,9 @@ export default function Chat(){
                 } else alert("empty input");
         };
 
+        // when a user signed out, redirect to home page
         const handleSignOut = (e) => {
                 e.preventDefault();
-                socket.on('roomData', ({room, users}) => {
-                        setUsers([...users]);
-                        console.log("users:", users);
-                });
                 socket.close();
                 history.push("/");     
         }
@@ -91,25 +82,8 @@ export default function Chat(){
                                 <Grid item xs={12} style={{textAlign: "right"}} >
                                 <Button type="submit" onClick={handleSignOut}>Sign Out</Button>
                                 </Grid>
-                                <Grid item xs={7} className="chatBox" ref={messagesEndRef}> 
-                                <div>
-                                {messages.map((v, i) => (
-                                        <div key={i}>
-                                                <b>{v.user}: {v.text}</b>
-                                        </div>
-                                ))}
-                                </div>
-                                </Grid>
-                                <Grid item xs={4} className="userList"> 
-                                <div>
-                                <h3>User List</h3>
-                                {users.map((v, i) => (
-                                        <div key={i}>
-                                                <b>{v.username}</b>
-                                        </div>
-                                ))}
-                                </div>
-                                </Grid>
+                                <Message messages={messages}/>
+                                <Userlist users={users}/>
                                 <Grid item xs={12}> 
                                 <form action="" onSubmit={handleSendMsg} className="inputBox">
                                 <input

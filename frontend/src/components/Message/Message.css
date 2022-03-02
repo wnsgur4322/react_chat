@@ -1,3 +1,9 @@
+/*
+Message.css
+Author: Derek Jeong
+Description: Message.css is a css styling file for implementing styles, fonts, and design.
+*/
+
 .chatBox {
         height: 400px;
         overflow-y: auto;
@@ -6,13 +12,4 @@
         padding-bottom: 20px;
         border: 1px lightgray solid;
         text-align: left;   
-}
-
-.userList {
-        height: 400px;
-        overflow-y: auto;
-}
-
-.inputBox {
-        width: 100%;
 }
