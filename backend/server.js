@@ -2,6 +2,7 @@ const http = require("http");
 const express = require("express");
 
 const app = express();
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
         cors: {
