@@ -1,0 +1,18 @@
+.chatBox {
+        height: 400px;
+        overflow-y: auto;
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-bottom: 20px;
+        border: 1px lightgray solid;
+        text-align: left;   
+}
+
+.userList {
+        height: 400px;
+        overflow-y: auto;
+}
+
+.inputBox {
+        width: 100%;
+}

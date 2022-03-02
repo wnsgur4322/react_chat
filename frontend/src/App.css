@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+
+.wrapper {
+  height: 100vh;
+	width: 100%;
+  /* https://www.eggradients.com/category/green-gradient */
+  background-color: #7ee8fa;
+  background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

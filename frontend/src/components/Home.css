@@ -1,0 +1,14 @@
+.formBox {
+        height: auto;
+        padding-top: 15px;
+        padding-bottom: 10px;    
+}
+.textInput {
+        width: 70%;
+        margin: 0 auto;
+        margin-top: 15px;
+}
+.btn {
+        width: 40%;
+        margin: 0 auto;
+}
