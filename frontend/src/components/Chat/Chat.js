@@ -22,7 +22,7 @@ export default function Chat(){
         const [users, setUsers] = useState([]);
         const [messages, setMessages] = useState([]);
         const [massage, setMassage] = useState("");
-        const endpoint = "http://localhost:3080";
+        const endpoint = "https://react-chat-kimchi.herokuapp.com/";
 
         // side effect when a user join the chat room
         useEffect(() => {

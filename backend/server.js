@@ -6,19 +6,27 @@ Description: server.js creates a server with express and connect with socket.io 
 
 const http = require("http");
 const express = require("express");
+const cors = require('cors');
+const socketio = require('socket.io');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 
 // handling cors error: https://socket.io/docs/v3/handling-cors/
-const io = require("socket.io")(server, {
-        cors: {
-          origin: "http://localhost:3000",
-          methods: ["GET", "POST"],
-          allowedHeaders: ["my-custom-header"],
-          credentials: true,
-        },
-      });
+// const io = require("socket.io")(server, {
+//         cors: {
+//           origin: "https://621fcff94b7fa16d3dc32d81--kimchichat.netlify.app/",
+//           methods: ["GET", "POST"],
+//           allowedHeaders: ["my-custom-header"],
+//           credentials: true,
+//         },
+//       });
+const io = socketio(server);
+const buildPath = path.join(__dirname, '..', 'frontend/build');
+console.log(buildPath);
+app.use(express.static(buildPath)); 
+app.use(cors());
 
 const PORT = process.env.PORT || 3080
 
