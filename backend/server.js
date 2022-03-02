@@ -1,7 +1,7 @@
 /*
 server.js
 Author: Derek Jeong
-Description: server.js creates server with express and connect with socket.io for chatting room
+Description: server.js creates a server with express and connect with socket.io for chatting room
 */
 
 const http = require("http");
