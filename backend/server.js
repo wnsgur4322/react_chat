@@ -23,9 +23,7 @@ const server = http.createServer(app);
 //         },
 //       });
 const io = socketio(server);
-const buildPath = path.join(__dirname, '..', 'frontend/build');
-console.log(buildPath);
-app.use(express.static(buildPath)); 
+app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 app.use(cors());
 
 const PORT = process.env.PORT || 3080
